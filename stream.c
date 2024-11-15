@@ -40,7 +40,9 @@
 /*     program constitutes acceptance of these licensing restrictions.   */
 /*  5. Absolutely no warranty is expressed or implied.                   */
 /*-----------------------------------------------------------------------*/
+# include <assert.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <math.h>
 # include <float.h>
 # include <limits.h>
@@ -184,9 +186,7 @@ typedef SSIZE_T ssize_t;
 #define STREAM_TYPE double
 #endif
 
-static STREAM_TYPE	a[STREAM_ARRAY_SIZE+OFFSET],
-			b[STREAM_ARRAY_SIZE+OFFSET],
-			c[STREAM_ARRAY_SIZE+OFFSET];
+static STREAM_TYPE *a, *b, *c;
 
 static double	avgtime[4] = {0}, maxtime[4] = {0},
 		mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
@@ -221,6 +221,13 @@ main()
     ssize_t		j;
     STREAM_TYPE		scalar;
     double		t, times[4][NTIMES];
+
+	a = (STREAM_TYPE*) malloc(sizeof(STREAM_TYPE) * (STREAM_ARRAY_SIZE+OFFSET));
+	assert (a != NULL);
+	b = (STREAM_TYPE*) malloc(sizeof(STREAM_TYPE) * (STREAM_ARRAY_SIZE+OFFSET));
+	assert (b != NULL);
+	c = (STREAM_TYPE*) malloc(sizeof(STREAM_TYPE) * (STREAM_ARRAY_SIZE+OFFSET));
+	assert (c != NULL);
 
     /* --- SETUP --- determine precision and check timing --- */
 
